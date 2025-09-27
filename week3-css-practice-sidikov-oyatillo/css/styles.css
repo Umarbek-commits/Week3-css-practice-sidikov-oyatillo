@@ -1,0 +1,164 @@
+/* css/styles.css
+   Week 3 — CSS Basics Practice
+   Organized, commented, responsive, accessible.
+*/
+
+/* ---- Base / Reset ---- */
+:root{
+  --bg: #ffffff;
+  --fg: #222222;
+  --muted: #555555;
+  --accent: #0b6efd;
+  --gap: 1rem;
+  --max-width: 1100px;
+  --header-h: 86px;
+}
+
+/* Respect user color-scheme */
+@media (prefers-color-scheme: dark) {
+  :root{
+    --bg: #0b0d0f;
+    --fg: #e6eef8;
+    --muted: #bfcbdc;
+    --accent: #66a3ff;
+  }
+}
+
+*{box-sizing: border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
+  color:var(--fg);
+  line-height:1.45;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---- Layout helpers ---- */
+.container{
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding:1rem;
+}
+
+/* ---- Header / Nav ---- */
+.site-header{
+  border-bottom:1px solid rgba(0,0,0,0.08);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+.site-title{margin:.25rem 0 .25rem 0;font-size:1.5rem;}
+.site-desc{margin:.25rem 0 1rem 0;color:var(--muted);}
+
+/* Accessible skip link */
+.skip-link{
+  position:absolute;
+  left:-999px;
+  top:auto;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+.skip-link:focus{
+  left:0;
+  top:0;
+  width:auto;
+  height:auto;
+  padding:.5rem;
+  background:var(--accent);
+  color:#fff;
+}
+
+/* Simple nav */
+.main-nav ul{list-style:none;padding:0;margin:0;display:flex;gap:0.5rem;flex-wrap:wrap}
+.main-nav a{display:inline-block;padding:.4rem .6rem;border-radius:6px;text-decoration:none;color:var(--accent);border:1px solid transparent}
+.main-nav a:focus, .main-nav a:hover{background:rgba(11,110,253,0.06);outline:2px solid transparent;outline-offset:2px;}
+
+/* ---- Grid for homepage lists ---- */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:1rem}
+.grid article{background:color-mix(in srgb, var(--accent) 4%, transparent);padding:1rem;border-radius:8px}
+
+/* ---- Main content ---- */
+main h2{margin-top:0}
+a{color:var(--accent)}
+
+/* ---- Footer ---- */
+.site-footer{border-top:1px solid rgba(0,0,0,0.06);padding:1rem 0;margin-top:2rem;color:var(--muted)}
+
+/* ---- Example components for exercises ---- */
+/* ---- Exercise 6: Flexbox layout ---- */
+.ex6-demo{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.ex6-demo > div{flex:1 1 120px;padding:.75rem;border-radius:8px;background:color-mix(in srgb, var(--accent) 8%, transparent)}
+
+/* ---- Exercise 8: Grid cards ---- */
+.ex8-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem}
+.card{padding:1rem;border-radius:8px;background:color-mix(in srgb, var(--accent) 6%, transparent);box-shadow:0 1px 0 rgba(0,0,0,0.03)}
+
+/* ---- Exercise 12: Simple animation ---- */
+@keyframes floatUp {
+  from { transform: translateY(8px); opacity: .6}
+  to   { transform: translateY(0); opacity: 1}
+}
+.anim-float{animation: floatUp 800ms ease both}
+
+/* ---- Accessibility focus ---- */
+:focus{outline:3px solid color-mix(in srgb,var(--accent) 60%, transparent);outline-offset:3px}
+
+/* ---- FIX: prevent header overlapping content ---- */
+/* Set an explicit header height variable and use it to push main content down */
+/* --header-h variable declared at :root */
+.site-header {
+  /* keep sticky behaviour, but make background less transparent */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: color-mix(in srgb, var(--bg) 98%, transparent);
+  backdrop-filter: blur(6px);
+  min-height: var(--header-h);
+  display: flex;
+  align-items: center;
+}
+
+/* Push the main content down so header doesn't overlap it */
+main.container {
+  padding-top: calc(var(--header-h) + 0.5rem);
+}
+
+/* For very small screens decrease header height */
+@media (max-width: 600px) {
+  :root { --header-h: 64px; }
+  main.container { padding-top: calc(var(--header-h) + 0.5rem); }
+}
+
+/* ---- Responsive ---- */
+@media (max-width: 600px){
+  .site-title{font-size:1.15rem}
+  .main-nav ul{flex-direction:column}
+  .container{padding:0.75rem}
+}
+
+/* ---- Exercise 2: Box model ---- */
+.ex2-box {
+  padding: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--bg) 96%, transparent);
+}
+
+/* ---- Exercise 11: CSS Grid complex (moved from inline styles) ---- */
+.ex11-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 10px;
+  align-items: start;
+}
+.ex11-grid > div { padding: .6rem; border-radius: 6px; background: color-mix(in srgb, var(--accent) 6%, transparent); }
+
+/* auto-generated from inline style in ex2.html */
+.auto-ex2-a99029 { padding:1rem;border:2px solid #ccc; }
+
+/* auto-generated from inline style in ex11.html */
+.auto-ex11-a8ddc3 { display:grid;grid-template-columns:1fr 2fr;gap:10px }
